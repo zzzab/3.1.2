@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Admin panel</title>
+</head>
+<body>
+
+<form metod="get" action="/logout" >
+    <button  tupe="submit"> Logout</button>
+
+</form>
+<table border="1">
+
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Password</th>
+    </tr>
+    <tr th:each="user: ${users}">
+        <td th:utext="${user.id}">Id</td>
+        <td th:utext="${user.username}">Name</td>
+
+        <td>
+            <a th:href="@{/admin/edit/{id}(id=${user.id})}">Edit</a>
+            <a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a>
+        </td>
+    </tr>
+</table>
+<br>
+<form method="get" action="/admin/add">
+    <button type="submit">Add</button>
+</form>
+</body>
+</html>

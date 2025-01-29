@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="UTF-8">
+<title>Create user</title>
+<head>
+</head>
+<body>
+
+<form metod="get" action="/logout" >
+    <button  tupe="submit"> Logout</button>
+</form>
+<br>
+
+<form action="#" th:action="@{/edit}" th:object="${user}" method="POST">
+    Id<input readonly type="number" th:field="*{id}" id="id" placeholder="ID"><br>
+
+
+    Name<input type="text" th:field="*{username}" id="name" placeholder="New name" required/><br>
+    Password<input type="text" th:field="*{password}" id="password" placeholder="New password" required/><br>
+    <p><input type="submit" value="Save">
+</form>
+</body>
+</html>
