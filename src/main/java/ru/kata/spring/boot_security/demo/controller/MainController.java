@@ -1,20 +1,21 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.CustomRoleService;
 import ru.kata.spring.boot_security.demo.service.CustomUserService;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,7 +29,12 @@ public class MainController {
     @GetMapping("/user")
     public String user(@AuthenticationPrincipal UserDetails details, Model model) {
         User user = userService.findByUsername(details.getUsername());
+        List<String> listRoles = details.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority) // Extract role names
+                .collect(Collectors.toList());
+
         model.addAttribute("user", user);
+        model.addAttribute("listRoles", listRoles);
         return "user";
     }
 
@@ -49,8 +55,11 @@ public class MainController {
     }
 
     @PostMapping("/edit")
-    public String updateUser(User user) {
-        userService.saveUser(user);
+    public String updateUser(@ModelAttribute("user") User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return "edit-form";
+        }
+        userService.updateUser(user);
         return "redirect:/admin";
     }
 

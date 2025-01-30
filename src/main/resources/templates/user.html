@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="utf-8">
     <title>User Details</title>
@@ -13,19 +13,33 @@
 <table border="1">
     <tr>
         <th>Id</th>
-        <th>Name</th>
-        <th>Password</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+        <th>E-mail</th>
+        <th>Role</th>
     </tr>
     <tr>
-        <td th:text="${user.id}">Id</td>
-        <td th:text="${user.username}">Name</td>
-        <td th:text="${user.password}">Password</td>
+        <td th:utext="${user.id}">Id</td>
+        <td th:utext="${user.username}">First Name</td>
+        <td th:utext="${user.surname}">Last Name</td>
+        <td th:utext="${user.age}">Age</td>
+        <td th:utext="${user.email}">E-mail</td>
+        <td>
+            <span th:each="role, iterStat : ${listRoles}">
+                <span th:utext="${#strings.replace(role, 'ROLE_', '')}"></span>
+                <span th:if="${!iterStat.last}">, </span>
+            </span>
+        </td>
     </tr>
 </table>
+<br/>
 
-<form method="get" action="/admin">
-    <button type="submit">User List</button>
-</form>
+<div th:if="${#lists.contains(listRoles, 'ROLE_ADMIN')}">
+    <button onclick="window.location.href='/admin'" class="btn btn-primary border">
+        User List
+    </button>
+</div>
 
 </body>
 </html>

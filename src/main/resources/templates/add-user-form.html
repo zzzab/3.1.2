@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title>Add User</title>
@@ -11,7 +11,10 @@
 </form>
 
 <form th:method="POST" th:action="@{/add}" th:object="${user}">
-    Name<br><input type="text" name="username" placeholder="New name" required/><br>
+    First Name<br><input type="text" name="username" placeholder="New name" required/><br>
+    Last Name<br><input type="text" name="surname" placeholder="New last name" required/><br>
+    Age<br><input type="text" name="age" placeholder="New age" required/><br>
+    E-mail<br><input type="text" name="email" placeholder="New e-mail" required/><br>
     Password<br><input type="text" name="password" placeholder="New password" required/><br>
 
     <p>

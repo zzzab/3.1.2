@@ -22,7 +22,8 @@ public class WebSecurityConfig {
                  */
                 .csrf(AbstractHttpConfigurer::disable) // Отключается необходимость передавать cookie (или иные заговлоки) при PUT, POST, DELETE методах.
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers(HttpMethod.GET).hasAnyRole("USER", "ADMIN")  // Доступ для пользователей с ролями USER или ADMIN
+                        .requestMatchers("/user").hasAnyRole("USER", "ADMIN")// Доступ для пользователей с ролями USER или ADMIN
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST).hasRole("ADMIN")  // Доступ только для пользователей с ролью ADMIN
                         .anyRequest().authenticated()  // Остальные запросы требуют аутентификации
                 )

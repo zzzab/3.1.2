@@ -13,6 +13,7 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -63,5 +64,14 @@ public class CustomUserServiceImpl implements CustomUserService {
 
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public Set<Role> getRoles(User user) {
+        return user.getRoles();
+    }
+
+    public void updateUser(User user) {
+        userRepository.save(user);
     }
 }

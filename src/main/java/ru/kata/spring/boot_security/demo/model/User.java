@@ -24,6 +24,12 @@ public class User implements UserDetails {
 
     private String username;
 
+    private String surname;
+
+    private String age;
+
+    private String email;
+
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
